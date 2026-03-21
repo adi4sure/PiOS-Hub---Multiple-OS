@@ -132,3 +132,9 @@ Edit `configs/linux-vm.json` and `configs/windows-vm.json` to set:
 - QEMU (`qemu-system-aarch64`, `qemu-utils`)
 - Python 3.11+
 - Node.js 18+ (for building the frontend)
+
+
+
+
+Made By Aditya Raj Chourassia...!!!
+{Copyright policies Enabled}
