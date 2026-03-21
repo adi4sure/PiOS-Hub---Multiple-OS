@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PiOS Hub — VM Manager</title>
+  <meta name="description"
+    content="Manage Linux and Windows virtual machines on your Raspberry Pi 5 with a stunning dark-themed dashboard." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+  <!-- ============================================================= -->
+  <!-- HEADER                                                         -->
+  <!-- ============================================================= -->
+  <header class="topbar" id="topbar">
+    <div class="topbar__brand">
+      <div class="topbar__logo" id="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <rect width="32" height="32" rx="8" fill="url(#logoGrad)" />
+          <path d="M8 22V10l8-4 8 4v12l-8 4-8-4z" fill="rgba(255,255,255,.15)" stroke="white" stroke-width="1.5" />
+          <path d="M16 6v20M8 10l8 6 8-6" stroke="white" stroke-width="1.5" stroke-linecap="round" />
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+              <stop stop-color="#6366F1" />
+              <stop offset="1" stop-color="#A855F7" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h1 class="topbar__title">PiOS Hub</h1>
+      <span class="topbar__badge">Raspberry Pi 5</span>
+    </div>
+    <div class="topbar__actions">
+      <button class="btn btn--ghost" id="btn-refresh" title="Refresh">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <polyline points="23 4 23 10 17 10" />
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+        </svg>
+      </button>
+      <button class="btn btn--danger" id="btn-android" title="Return to Android">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span>Android</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================= -->
+  <!-- SYSTEM STATS BAR                                               -->
+  <!-- ============================================================= -->
+  <section class="stats-bar" id="stats-bar">
+    <div class="stat-card" id="stat-cpu">
+      <div class="stat-card__ring">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" class="ring-bg" />
+          <circle cx="40" cy="40" r="34" class="ring-fg ring-fg--cpu" id="ring-cpu" />
+        </svg>
+        <span class="stat-card__value" id="val-cpu">0%</span>
+      </div>
+      <span class="stat-card__label">CPU</span>
+    </div>
+    <div class="stat-card" id="stat-ram">
+      <div class="stat-card__ring">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" class="ring-bg" />
+          <circle cx="40" cy="40" r="34" class="ring-fg ring-fg--ram" id="ring-ram" />
+        </svg>
+        <span class="stat-card__value" id="val-ram">0%</span>
+      </div>
+      <span class="stat-card__label">RAM</span>
+    </div>
+    <div class="stat-card" id="stat-disk">
+      <div class="stat-card__ring">
+        <svg viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="34" class="ring-bg" />
+          <circle cx="40" cy="40" r="34" class="ring-fg ring-fg--disk" id="ring-disk" />
+        </svg>
+        <span class="stat-card__value" id="val-disk">0%</span>
+      </div>
+      <span class="stat-card__label">Disk</span>
+    </div>
+    <div class="stat-card stat-card--temp" id="stat-temp">
+      <div class="stat-card__icon">🌡️</div>
+      <span class="stat-card__value" id="val-temp">—</span>
+      <span class="stat-card__label">Temp</span>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- MAIN CONTENT                                                   -->
+  <!-- ============================================================= -->
+  <main class="main" id="main">
+
+    <!-- Section heading -->
+    <div class="section-header">
+      <h2>Virtual Machines</h2>
+      <button class="btn btn--primary" id="btn-create-vm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        <span>New VM</span>
+      </button>
+    </div>
+
+    <!-- VM cards container -->
+    <div class="vm-grid" id="vm-grid">
+      <!-- Cards are injected by JS -->
+      <div class="vm-card vm-card--empty" id="vm-empty-state">
+        <div class="vm-card__empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"
+            stroke-linecap="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" />
+            <line x1="8" y1="21" x2="16" y2="21" />
+            <line x1="12" y1="17" x2="12" y2="21" />
+          </svg>
+        </div>
+        <p>No virtual machines yet.</p>
+        <p class="muted">Click "New VM" to create one.</p>
+      </div>
+    </div>
+
+    <!-- Log panel -->
+    <div class="section-header section-header--mt">
+      <h2>Activity Log</h2>
+      <button class="btn btn--ghost btn--sm" id="btn-clear-log">Clear</button>
+    </div>
+    <div class="log-panel" id="log-panel">
+      <pre id="log-output">Welcome to PiOS Hub 🚀\nReady to manage your virtual machines.\n</pre>
+    </div>
+  </main>
+
+  <!-- ============================================================= -->
+  <!-- CREATE VM MODAL                                                -->
+  <!-- ============================================================= -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal-create">
+      <div class="modal__header">
+        <h3>Create Virtual Machine</h3>
+        <button class="btn btn--ghost btn--icon" id="btn-close-modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="form-group">
+          <label for="vm-name">VM Name</label>
+          <input type="text" id="vm-name" placeholder="e.g. alpine-linux" autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="vm-type">Operating System Type</label>
+          <div class="type-selector" id="vm-type-selector">
+            <button class="type-btn type-btn--active" data-type="linux" id="type-linux">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" />
+                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                <circle cx="9" cy="10" r="1" fill="currentColor" />
+                <circle cx="15" cy="10" r="1" fill="currentColor" />
+              </svg>
+              <span>Linux</span>
+            </button>
+            <button class="type-btn" data-type="windows" id="type-windows">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="8" height="8" rx="1" />
+                <rect x="13" y="3" width="8" height="8" rx="1" />
+                <rect x="3" y="13" width="8" height="8" rx="1" />
+                <rect x="13" y="13" width="8" height="8" rx="1" />
+              </svg>
+              <span>Windows</span>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="vm-disk-size">Disk Size</label>
+          <select id="vm-disk-size">
+            <option value="2G">2 GB (minimal)</option>
+            <option value="4G" selected>4 GB (recommended for Linux)</option>
+            <option value="8G">8 GB</option>
+            <option value="12G">12 GB (recommended for Windows)</option>
+            <option value="16G">16 GB</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn--ghost" id="btn-cancel-modal">Cancel</button>
+        <button class="btn btn--primary" id="btn-confirm-create">Create VM</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!-- TOAST CONTAINER                                                -->
+  <!-- ============================================================= -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>

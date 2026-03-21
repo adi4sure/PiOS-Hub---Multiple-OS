@@ -1,0 +1,18 @@
+{
+  "name": "windows-vm",
+  "type": "windows",
+  "qemu_binary": "qemu-system-aarch64",
+  "machine": "virt",
+  "cpu_model": "cortex-a72",
+  "accelerator": "tcg",
+  "ram": "3072",
+  "cpus": "2",
+  "disk_size": "12G",
+  "efi_firmware": "/usr/share/qemu-efi-aarch64/QEMU_EFI.fd",
+  "extra_flags": [
+    "-device", "ramfb",
+    "-device", "usb-ehci",
+    "-device", "usb-kbd",
+    "-device", "usb-tablet"
+  ]
+}

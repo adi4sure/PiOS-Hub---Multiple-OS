@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.env
+*.egg-info/
+dist/
+build/
+
+# Node / Vite
+client/node_modules/
+client/dist/
+*.log
+.npm
+
+# VM disks (can be huge – tracked separately)
+*.qcow2
+*.img
+*.iso
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+*.swp
+*.swo
+.idea/
