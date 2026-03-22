@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/Pocket-Galax---Multiple-OS-offline-/',
+  base: '/PiOS-Hub---Multiple-OS/',
   plugins: [react()],
   server: {
     port: 5173,

@@ -6,7 +6,7 @@ A polished, glassmorphism-themed VM manager dashboard for the **Raspberry Pi 5**
 
 > **Try the UI right now — no setup required!**
 >
-> 👉 **[Launch PiOS Hub UI](https://adi4sure.github.io/Pocket-Galax---Multiple-OS-offline-/)** 👈
+> 👉 **[Launch PiOS Hub UI](https://adi4sure.github.io/PiOS-Hub---Multiple-OS/)** 👈
 >
 > _(This is a static preview of the frontend. VM operations require the Flask backend running on a Raspberry Pi.)_
 
