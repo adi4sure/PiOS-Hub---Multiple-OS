@@ -2,6 +2,16 @@
 
 A polished, glassmorphism-themed VM manager dashboard for the **Raspberry Pi 5**, running inside Termux on Emteria OS (Android). Manage QEMU-based Linux and Windows ARM virtual machines from a modern React web interface served by Flask.
 
+## 🌐 Live Demo
+
+> **Try the UI right now — no setup required!**
+>
+> 👉 **[Launch PiOS Hub UI](https://adi4sure.github.io/Pocket-Galax---Multiple-OS-offline-/)** 👈
+>
+> _(This is a static preview of the frontend. VM operations require the Flask backend running on a Raspberry Pi.)_
+
+---
+
 ## Features
 
 - 🐧 **Linux VM management** — Alpine, Debian, Ubuntu ARM images via QEMU/KVM
